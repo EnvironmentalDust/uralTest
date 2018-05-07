@@ -1,0 +1,44 @@
+<?php
+
+const PAGE_ENCODING     ='UTF-8';
+
+if(mb_internal_encoding(PAGE_ENCODING) != PAGE_ENCODING) 
+throw new SomeException('There is no support encoding: '.PAGE_ENCODING);
+
+$mysqli = new mysqli("localhost", "root", "", "ural");
+if ($mysqli->connect_errno) {
+    echo "Не удалось подключиться к MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+}
+    
+/* create prepared query */
+$Name = strval($_GET['deviceName']);
+$Name = substr($Name, 1, -1);
+
+if ($stmt = $mysqli->prepare("SELECT devicequery.queryTime, devicequery.ping FROM devicequery LEFT JOIN device ON devicequery.deviceID = device.deviceID WHERE device.deviceName = ?")) {
+
+    /* bindin' params */
+    $stmt->bind_param("s", $Name);
+
+    /* exec query */
+    $stmt->execute();
+
+    /* bindin' result params */
+    $stmt->bind_result($queryTime, $ping);
+
+    $current = "";
+
+    while ($row = $stmt->fetch()) {
+
+        $timeRow = substr($queryTime, 0, -3);
+        $text = sprintf ("{\"queryTime\":\"%s\",\"ping\":\"%s\"}, \n", $timeRow, $ping);
+        $current .= $text;
+        
+    }
+
+    $current = substr($current, 0, -3);
+    echo "[$current]";
+
+    $stmt->close();
+}
+
+?>
