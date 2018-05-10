@@ -1,4 +1,4 @@
-<form name="login_form" action="login.php" method="post">
+<form name="login_form" action="index.php" method="post">
     <fieldset>
         <p>
             <input type='text' id='form_name' name='form_name' placeholder='Логин'>

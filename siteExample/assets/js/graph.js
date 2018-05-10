@@ -32,11 +32,12 @@ var svg = d3.select("#graph svg")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // Get the data
-d3.csv("lib/data-up.csv", function(error, data) {
-    data.forEach(function(d) {
-        d.date = parseDate(d.date);
-        d.close = +d.close;
-    });
+d3.json("", function(error, data) {
+    data = JSON.parse('[{"queryTime":"07:00", "ping":"100"}, {"queryTime":"07:00", "ping":"100"}]');
+        data.forEach(function(d) {
+            d.date = parseDate(d.queryTime);
+            d.close = +d.ping;
+        });
 
     // Scale the range of the data
     x.domain([parseDate('07:00'), parseDate('19:00')]);

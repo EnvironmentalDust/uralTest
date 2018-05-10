@@ -9,8 +9,10 @@ function ajaxFunc(clicked) {
         if (this.readyState == 4 && this.status == 200) {
             data = JSON.parse(this.response);
             if (data.length != 0){
-                document.querySelector("#attr #type #type").innerHTML = data[0].typeType + " " + data[0].typeName;
-                document.querySelector("#attr #name #name").innerHTML = clicked;    
+                console.log(data);
+                document.querySelector("#attr #type #type").innerHTML = data[0].type;
+                document.querySelector("#attr #name #name").innerHTML = clicked;
+                // console.log(clicked);
                 document.querySelector("#attr #serial #serial").innerHTML = data[0].serial;
                 document.querySelector("#attr #IP #IP").innerHTML = data[0].IP;
                 document.querySelector("#attr #MAC #MAC").innerHTML = data[0].MAC;
@@ -18,22 +20,28 @@ function ajaxFunc(clicked) {
                 document.querySelector("#attr #telnum #telnum").innerHTML = data[0].telNum;
                 document.querySelector("#attr #subdiv #subdiv").innerHTML = data[0].subDiv;
                 document.querySelector("#attr #note #note").innerHTML = data[0].note;
+                if (document.querySelector("#attr button") != undefined) {
+                    document.querySelector("#attr button").textContent = "Изменить";
+                }
                 updateData(data);
             } else {
-                document.querySelector("#attr #type #type").innerHTML = "";
-                document.querySelector("#attr #name #name").innerHTML = "";    
-                document.querySelector("#attr #serial #serial").innerHTML = "";
-                document.querySelector("#attr #IP #IP").innerHTML = "";
-                document.querySelector("#attr #MAC #MAC").innerHTML = "";
-                document.querySelector("#attr #inventory #inventory").innerHTML = "";
-                document.querySelector("#attr #telnum #telnum").innerHTML = "";
-                document.querySelector("#attr #subdiv #subdiv").innerHTML = "";
-                document.querySelector("#attr #note #note").innerHTML = "";
+                document.querySelector("#attr #type #type").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #name #name").innerHTML = clicked;    
+                document.querySelector("#attr #serial #serial").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #IP #IP").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #MAC #MAC").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #inventory #inventory").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #telnum #telnum").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #subdiv #subdiv").innerHTML = "Данные отсутствуют";
+                document.querySelector("#attr #note #note").innerHTML = "Данные отсутствуют";
+                if (document.querySelector("#attr button") != undefined) {
+                    document.querySelector("#attr button").textContent = "Создать";
+                }
                 updateData();
             }
         };
     };
-    xmlhttp.open("GET", "http://localhost/siteExample/assets/php/data.php?deviceName=" + JSON.stringify(clicked), true);
+    xmlhttp.open("GET", "http://localhost/siteExample/assets/php/data.php?deviceName=" + encodeURIComponent(clicked), true);
     xmlhttp.send();
 };
 
@@ -52,15 +60,16 @@ function myFunction() {
 };
 
 function changeFunction() {
-    type = document.querySelector("#attr #type #type").value;
-    name = document.querySelector("#attr #name #name").value;    
-    serial = document.querySelector("#attr #serial #serial").value;
-    IP = document.querySelector("#attr #IP #IP").value;
-    MAC = document.querySelector("#attr #MAC #MAC").value;
-    inv = document.querySelector("#attr #inventory #inventory").value;
-    telNum = document.querySelector("#attr #telnum #telnum").value;
-    subDiv = document.querySelector("#attr #subdiv #subdiv").value;
-    note = document.querySelector("#attr #note #note").value;
+    state = encodeURIComponent(document.querySelector("#attr button").textContent);
+    type = encodeURIComponent(document.querySelector("#attr #type #type").value);
+    name = encodeURIComponent(document.querySelector("#attr #name #name").value);    
+    serial = encodeURIComponent(document.querySelector("#attr #serial #serial").value);
+    IP = encodeURIComponent(document.querySelector("#attr #IP #IP").value);
+    MAC = encodeURIComponent(document.querySelector("#attr #MAC #MAC").value);
+    inv = encodeURIComponent(document.querySelector("#attr #inventory #inventory").value);
+    telNum = encodeURIComponent(document.querySelector("#attr #telnum #telnum").value);
+    subDiv = encodeURIComponent(document.querySelector("#attr #subdiv #subdiv").value);
+    note = encodeURIComponent(document.querySelector("#attr #note #note").value);
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.open("POST", "http://localhost/siteExample/assets/php/data.php", true);
     xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -69,7 +78,8 @@ function changeFunction() {
             document.querySelector("#wrapper header h1").innerHTML = "ОТОСЛАЛИ!";
         };
     };
-    xmlhttp.send("type=" + type + "&name=" + name + "&serial=" + serial + "&IP=" + IP + "&MAC=" + MAC + "&inv=" + inv + "&telNum=" + telNum + "&subDiv=" + subDiv + "&note=" + note);
+    console.log(IP);
+    xmlhttp.send("type=" + type + "&name=" + name + "&serial=" + serial + "&IP=" + IP + "&MAC=" + MAC + "&inv=" + inv + "&telNum=" + telNum + "&subDiv=" + subDiv + "&note=" + note + "&state=" + state);
     
 }
 

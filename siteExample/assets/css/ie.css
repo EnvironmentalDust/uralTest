@@ -1,6 +1,10 @@
+html{
+    height: 100%;
+}
 body {
 	background-size: auto, auto, cover;
-	background-color: #282B2F; 
+    background-color: #282B2F; 
+    height: 100%;
 }
 body>div {
 	max-width: 978px;
@@ -8,8 +12,10 @@ body>div {
 	background-color: #FFF;
 	padding: 0.7em;
 }
-img {
-	width: 100%;
+#wrapper{
+    max-height: 220%;
+    display: flex;
+    flex-direction: column;
 }
 #attr {
     position: fixed;
@@ -22,17 +28,27 @@ img {
 	#attr p{
 		margin: 20px 5px;
 	}
+		#attr p textarea{
+			width: 100%;
+		}
+#map{
+    margin-bottom: 38%;
+    height: 374px;
+}
 #map svg {
 	width: 97.8%;
 	box-sizing: border-box;
 	border: 1px solid #013d7c;
 	margin: 10px;
 }
+#graph{
+    height: 100%;
+    margin:3% 0 15%;
+}
 #graph svg {
 	width: 97%!important;
     height: 100%!important;
 }
-
 nav ul {
 	list-style: none;
 	display: flex;
@@ -40,12 +56,12 @@ nav ul {
 	margin: 0;
 	padding: 2em 0em 0em 0em ;
 }
-nav li {
-	width: 18%;
-	background-color: white;
-	margin: 0 0.5em;
- 
-}
+    nav li {
+        width: 18%;
+        background-color: white;
+        margin: 0 0.5em;
+    
+    }
 nav a {
 	text-decoration: none;
 	color: #FFF;
@@ -66,16 +82,22 @@ header {
 header h1 {
 	margin: auto;
 }
+header div {
+	width: 20%;
+}
+
 footer {
+	margin-top: 3%;
+
 	text-align: right;
 	border-top: 1px solid black;
 	padding-right: 1em;
 }
-#a1 .z1, #a2 .z2, #a3 .z3, #a4 .z4, #a5 .z5{
-	transform: scale(1.1, 1.2);
-} 
 #a3 nav {
 	margin-bottom: 20px;
+}
+body { 
+	font: 12px Arial;
 }
 path { 
     stroke: steelblue;
@@ -92,7 +114,8 @@ path {
 	display:flex;
 	flex-direction: row;
 	justify-content: safe;
-
+	align-items: stretch;
+	font: 400 13.3333px Arial;
 }
 	#options #name{
 		width: 99%;

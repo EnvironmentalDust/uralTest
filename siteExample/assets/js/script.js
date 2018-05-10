@@ -12,6 +12,7 @@ function ready(callback){
 ready(function(){
 
     clickedElement = document.getElementById("layer1").getElementsByTagName("g");
+    // console.log(clickedElement);
     for (var i = 0; i < clickedElement.length; i++) {
         clickedElement[i].addEventListener('click', myFunction, false);
     };
